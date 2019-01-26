@@ -1,27 +1,39 @@
 require("minitest/autorun")
 require('minitest/rg')
 require_relative("../rooms")
+require_relative("../songs")
+require_relative("../guests")
 
 class RoomTest < MiniTest::Test
 
-  def setup
-    @customer_1 = Guest.new("Paco", 01)
-    @customer_2 = Guest.new("Paquito", 02)
+  def setup()
+    @guest_1 = Guest.new("Paco", 01)
+    @guest_2 = Guest.new("Paquito", 02)
+
     @song_1 = Song.new("Send me an Angel", 01)
     @song_2 = Song.new("Like a hurricane", 02)
 
-    @guest_list = [@customer_1, @customer_2]
-    @songlist = [@song_1, @song_2]
-
-    @room = Room.new(01, @guest_list, @song_list)
+    @room = Room.new(01)
   end
 
-  def test_room_has_guest?
-    assert_equal([["Paco", 01],["Paquito", 02]] , @room.guest_list())
+  def test_room_has_guest?()
+    @room.check_in(@customer_1)
+    @room.check_in(@customer_2)
+    assert_equal(2, @room.room_count())
   end
 
   def test_room_has_songs?
-    assert_equal([["Send me an Angel", 01], ["Like a hurricane", 02]] , @room.song_list)
+    @room.add_songs_to_room(@song_1)
+    @room.add_songs_to_room(@song_2)
+    assert_equal([@song_1, @song_2] , @room.song_list)
+  end
+
+  def test_room_is_clear?
+    @room.check_in(@customer_1)
+    @room.check_in(@customer_2)
+    @room.check_out()
+    assert_equal(0, @room.room_count())
+    assert_equal(0, @room.song_list.length)
   end
 
 end
