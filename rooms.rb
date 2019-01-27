@@ -1,6 +1,6 @@
 class Room
 
-  attr_reader :room_number, :song_list
+  attr_reader :room_number
 
   def initialize(room_number)
     @room_number = room_number
@@ -13,7 +13,11 @@ class Room
   end
 
   def room_count()
-    return @guest_list.length()
+    @guest_list.length()
+  end
+
+  def room_song_count()
+    @song_list.length()
   end
 
   def add_songs_to_room(songs)
@@ -23,6 +27,12 @@ class Room
   def check_out()
     @guest_list.clear()
     @song_list.clear()
+  end
+
+  def checkspace
+    if @guest_list.length > 2
+      p "Room is not big enough!"
+    end
   end
 
 end
