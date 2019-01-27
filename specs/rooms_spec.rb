@@ -7,9 +7,9 @@ require_relative("../guests")
 class RoomTest < MiniTest::Test
 
   def setup()
-    @guest_1 = Guest.new("Paco", 01, 25)
-    @guest_2 = Guest.new("Paquito", 02, 50)
-    @guest_3 = Guest.new("Pachote", 03, 25)
+    @customer_1 = Guest.new("Paco", 01, 25)
+    @customer_2 = Guest.new("Paquito", 02, 50)
+    @customer_3 = Guest.new("Pachote", 03, 25)
 
     @song_1 = Song.new("Send me an Angel", 01)
     @song_2 = Song.new("Like a hurricane", 02)
@@ -45,8 +45,11 @@ class RoomTest < MiniTest::Test
     assert_equal("Room is not big enough!", @room.checkspace)
   end
 
-  def test_enough_space__too_many
-
+  def test_entry_fee
+    @room.entry_fee(@customer_1)
+    assert_equal("You cannot pay the fee, sorry", @room.entry_fee(@customer_1))
+    @room.entry_fee(@customer_2)
+    assert_equal("Please, go in", @room.entry_fee(@customer_2))
   end
 
 end

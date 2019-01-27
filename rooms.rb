@@ -35,4 +35,12 @@ class Room
     end
   end
 
+  def entry_fee(guests)
+    if guests.wallet <= 30
+      p "You cannot pay the fee, sorry"
+    else
+      p "Please, go in"
+    end
+  end
+
 end
